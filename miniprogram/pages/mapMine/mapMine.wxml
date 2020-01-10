@@ -1,11 +1,12 @@
 <map
-  style="with: 100vw; height: 800rpx;"
+  style="width: 100vw; height: 800rpx;"
   longitude="{{longitude}}"
   latitude="{{latitude}}"
-  markers="{{markers}}"
   polyline="{{polyline}}"
   show-location="true"
 />
 
 <button bind:tap="clickStart" size="mini" style="background-color: red">开始</button>
 <button bind:tap="clickEnd" size="mini" style="background-color: blue">结束</button>
+<view>跑步时长为: {{runtime}}</view>
+<view>跑步路程为: {{distance}}</view>
