@@ -11,6 +11,7 @@ Page({
   },
 
   onLoad: function() {
+    
     if (!wx.cloud) {
       wx.redirectTo({
         url: '../chooseLib/chooseLib',
@@ -47,6 +48,16 @@ Page({
   },
 
   onGetOpenid: function() {
+    wx.getLocation({
+      type: 'gcj02',
+      success: (res) => {
+        app.globalData.initLongitude = res.longitude
+        app.globalData.initLatitude = res.latitude
+      }
+    })
+
+    console.log(app.globalData.initLongitude, app.globalData.initLatitude)
+    
     // 调用云函数
     wx.cloud.callFunction({
       name: 'login',

@@ -1,0 +1,21 @@
+<view class="content">
+
+  <view class="account">
+  <view class="title">学号</view>
+  <view class="num">
+  <input bindinput="inputStudentID" placeholder="1604240525"/></view>
+  </view>
+  
+  <view class="hr"></view>
+
+  <view class="account">
+  <view class="title">姓名</view>
+  <view class="name"><input bindinput="inputName" placeholder="王国成"  placeholder-style="color:#999999;"/></view>
+  </view>
+
+  <view class="hr"></view>
+
+  <button class="btn" type="primary" bindtap="login">登录</button> 
+  
+   
+</view>

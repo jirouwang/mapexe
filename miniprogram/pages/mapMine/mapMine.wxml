@@ -10,3 +10,5 @@
 <button bind:tap="clickEnd" size="mini" style="background-color: blue">结束</button>
 <view>跑步时长为: {{runtime}}</view>
 <view>跑步路程为: {{distance}}</view>
+
+<button bind:tap="getLocation">获取当前位置信息</button>

@@ -1,8 +1,11 @@
+let app = getApp();
 const points = []
 let runtime = 0
 Page({
   data: {
     id: '',
+    // longitude: app.globalData.initLogitude,
+    // latitude: app.globalData.initLatitude,
     longitude: 0,
     latitude: 0,
     polyline: [{
@@ -14,6 +17,12 @@ Page({
     speed: 0,
     runtime: 0,
     distance: 0
+  },
+  onLoad: function() {
+    this.setData({
+      longitude: app.globalData.initLongitude,
+      latitude: app.globalData.initLatitude
+    })
   },
   distance(la1, lo1, la2, lo2) {
     if(la1===0||lo1===0) {
@@ -32,9 +41,11 @@ Page({
     return s * 1000
   },
   clickEnd() {
-    clearInterval(this.data.id)
+    console.log(this.data.latitude,this.data.longitude)
+    this.data.id && clearInterval(this.data.id)
   },
   clickStart() {
+    // console.log(app.globalData.initLatitude)
     const id = setInterval(() => {
       wx.getLocation({
         type: 'gcj02',
@@ -69,6 +80,50 @@ Page({
     },1000)
     this.setData({
       id
+    })
+  },
+  getLocation() {
+    wx.getSetting({
+      success: (res) => {
+        if (res.authSetting['scope.userLocation'] !== undefined && res.authSetting['scope.userLocation'] !== true) {
+          wx.showModal({
+            title: '是否授权当前位置',
+            content: '需要获取您的地理位置,请确认授权,否则地图功能将无法使用',
+            success: (res) => {
+              if(res.confirm) {
+                wx.openSetting({
+                  success: (res) => {
+                    console.log(res)
+                    if (res.authSetting["scope.userLocation"] === true) {
+                      console.log(1111111)
+                      
+                      wx.showToast({
+                        title: '授权成功',
+                        icon: 'success',
+                        mask: true,
+                        duration: 1500,
+                        success: () => {
+                          wx.getLocation({
+                            type: 'gcj02',
+                            success: (res) => {
+                              this.setData({
+                                latitude: res.latitude,
+                                longitude: res.longitude
+                              })
+                            }
+                          })
+                        }
+                      })
+                      
+                    }
+                  }
+                })
+                
+              }
+            }
+          })
+        }
+      }
     })
   }
 })
